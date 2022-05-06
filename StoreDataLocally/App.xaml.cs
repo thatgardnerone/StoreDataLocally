@@ -7,12 +7,29 @@ namespace StoreDataLocally;
 
 public partial class App : Application
 {
-	string dbPath => FileAccessHelper.GetLocalFilePath("people.db3");
+    private string dbPath => FileAccessHelper.GetLocalFilePath("people.db3");
 
-	public App()
+    public static PersonRepository PersonRepository { get; set; }
+
+    public App()
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell();
+        PersonRepository = new PersonRepository(dbPath);
+
+        MainPage = new AppShell();
 	}
+
+    protected override void OnStart()
+    {
+        // Handle app start
+    }
+    protected override void OnSleep()
+    {
+        // Handle app sleep
+    }
+    protected override void OnResume()
+    {
+        // Handle app resume
+    }
 }

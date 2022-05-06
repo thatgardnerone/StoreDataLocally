@@ -2,6 +2,7 @@
 
 public static class MauiProgram
 {
+	private static string DbPath => FileAccessHelper.GetLocalFilePath("people.db3");
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();

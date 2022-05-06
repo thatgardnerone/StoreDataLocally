@@ -1,20 +1,34 @@
-﻿namespace StoreDataLocally;
+﻿using StoreDataLocally.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+
+namespace StoreDataLocally;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+    private readonly PersonRepository _personRepository;
 
-	public MainPage()
-	{
-		InitializeComponent();
-	}
+    public MainPage()
+    {
+        _personRepository = App.PersonRepository;
+        InitializeComponent();
+    }
 
-	private void OnCounterClicked(object sender, EventArgs e)
-	{
-		count++;
-		CounterLabel.Text = $"Current count: {count}";
+    public void OnNewButtonClicked(object sender, EventArgs args)
+    {
+        statusMessage.Text = "";
 
-		SemanticScreenReader.Announce(CounterLabel.Text);
-	}
+        _personRepository.AddNewPerson(newPerson.Text);
+        statusMessage.Text = _personRepository.StatusMessage;
+    }
+
+    public void OnGetButtonClicked(object sender, EventArgs args)
+    {
+        statusMessage.Text = "";
+
+        List<Person> people = _personRepository.GetAllPeople();
+        peopleList.ItemsSource = people;
+    }
 }
 
